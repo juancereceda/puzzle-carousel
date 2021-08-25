@@ -1,11 +1,15 @@
 import React from "react";
-import { Image, StyleSheet, View, FlatList } from "react-native";
+import { Image, StyleSheet, View, FlatList, Dimensions } from "react-native";
 import data from "../../data/data";
+
+const max_width = Dimensions.get("screen").width;
 
 function FlatListCarousel() {
   return (
     <View style={styles.flatList}>
       <FlatList
+        pagingEnabled
+        bounces={false}
         horizontal={true}
         data={data}
         renderItem={({ item }) => (
@@ -18,11 +22,11 @@ function FlatListCarousel() {
 
 const styles = StyleSheet.create({
   flatList: {
-    height: 200,
+    height: max_width / 2,
   },
   img: {
-    height: 200,
-    width: 200,
+    height: max_width / 2,
+    width: max_width / 2,
   },
 });
 
