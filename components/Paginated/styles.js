@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: max_width,
   },
   img: {
     height: max_width / 2,
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     top: "35%",
-    marginLeft: max_width,
     width: "97%",
     justifyContent: "space-between",
   },

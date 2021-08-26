@@ -1,51 +1,51 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
   View,
-  StyleSheet,
   Image,
   TouchableOpacity,
   Dimensions,
   Animated,
-  Easing,
 } from "react-native";
 import data from "../../data/data";
 import LeftArrow from "../../assets/left_light_arrow.png";
 import DisabledLeftArrow from "../../assets/left_dark_arrow.png";
 import RightArrow from "../../assets/right_light_arrow.png";
 import DisabledRightArrow from "../../assets/right_dark_arrow.png";
+import styles from "./styles";
 
 const max_width = Dimensions.get("screen").width;
+
 function Carousel() {
-  const [auxValue, setAuxValue] = useState(0);
-  const value = new Animated.Value(auxValue);
-  const valueRef = useRef(value);
+  let startPosition = 0;
+  const positionValue = new Animated.Value(startPosition);
+  const positionValueRef = useRef(positionValue);
 
   const animateCarouselLeft = () => {
-    Animated.timing(valueRef.current, {
-      toValue: auxValue + max_width,
-      duration: 1000,
+    Animated.timing(positionValueRef.current, {
+      toValue: startPosition + Dimensions.get("screen").width,
+      duration: 2000,
       useNativeDriver: true,
     }).start(() => {
-      setAuxValue(auxValue + max_width);
+      startPosition += Dimensions.get("screen").width;
     });
   };
   const animateCarouselRight = () => {
-    Animated.timing(valueRef.current, {
-      toValue: auxValue - max_width,
-      duration: 1000,
+    Animated.timing(positionValueRef.current, {
+      toValue: startPosition - Dimensions.get("screen").width,
+      duration: 2000,
       useNativeDriver: true,
     }).start(() => {
-      setAuxValue(auxValue - max_width);
+      startPosition -= Dimensions.get("screen").width;
     });
   };
 
-  const auxStyle = {
-    translateX: value,
+  const animationStyle = {
+    translateX: positionValue,
   };
 
   return (
     <View style={styles.carouselCnt}>
-      <Animated.View style={[styles.carousel, auxStyle]}>
+      <Animated.View style={[styles.carousel, animationStyle]}>
         {data &&
           data.map((img) => {
             return (
@@ -55,7 +55,7 @@ function Carousel() {
       </Animated.View>
       <View style={styles.paginate}>
         <View style={styles.arrowCnt}>
-          {auxValue < max_width ? (
+          {startPosition < max_width ? (
             <TouchableOpacity onPress={() => animateCarouselLeft()}>
               <Image source={LeftArrow} style={styles.arrow} />
             </TouchableOpacity>
@@ -64,7 +64,7 @@ function Carousel() {
           )}
         </View>
         <View style={styles.arrowCnt}>
-          {auxValue > -2 * max_width ? (
+          {startPosition > -max_width ? (
             <TouchableOpacity onPress={() => animateCarouselRight()}>
               <Image source={RightArrow} style={styles.arrow} />
             </TouchableOpacity>
@@ -76,38 +76,5 @@ function Carousel() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  carousel: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: max_width,
-  },
-  img: {
-    height: max_width / 2,
-    width: max_width / 2,
-  },
-  paginate: {
-    position: "absolute",
-    flex: 1,
-    flexDirection: "row",
-    top: "35%",
-    marginLeft: max_width,
-    width: "97%",
-    justifyContent: "space-between",
-  },
-  arrowCnt: {
-    backgroundColor: "rgba(51, 55, 71,0.4)",
-    borderRadius: 100,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  arrow: {
-    height: 40,
-    width: 40,
-  },
-});
 
 export default Carousel;

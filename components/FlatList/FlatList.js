@@ -1,8 +1,7 @@
 import React from "react";
-import { Image, StyleSheet, View, FlatList, Dimensions } from "react-native";
+import { Image, View, FlatList } from "react-native";
 import data from "../../data/data";
-
-const max_width = Dimensions.get("screen").width;
+import styles from "./styles";
 
 function FlatListCarousel() {
   return (
@@ -15,19 +14,10 @@ function FlatListCarousel() {
         renderItem={({ item }) => (
           <Image source={item} style={styles.img} key={data.indexOf(item)} />
         )}
+        keyExtractor={(item, index) => index.toString()}
       ></FlatList>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  flatList: {
-    height: max_width / 2,
-  },
-  img: {
-    height: max_width / 2,
-    width: max_width / 2,
-  },
-});
 
 export default FlatListCarousel;
