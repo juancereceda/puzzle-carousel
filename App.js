@@ -10,7 +10,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>FlatList</Text>
       <FlatListCarousel />
-      <Text style={styles.title}>Left-Right Carousel</Text>
+      <Text style={styles.title}>Animated Carousel</Text>
       <Carousel />
       <Text style={styles.title}>Paginated Carousel</Text>
       <Paginated />
